@@ -1,0 +1,59 @@
+.header header {
+  background-color: #00264b;
+  text-align: center;
+  width: 100%;
+  height: 80px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  margin: auto;
+}
+.logout {
+  justify-content: end;
+  display: flex;
+  margin-right: 7em;
+}
+.login {
+  justify-content: end;
+  display: flex;
+  margin-left: 7em;
+}
+
+#btnProfile {
+  display: block;
+  
+}
+.btnIP {
+  background-color: cyan;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.6em;
+  width: 7em;
+}
+
+#profile {
+  display: none;
+  background-color: cyan;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 0.2em;
+}
+.profile p, .profile h3 {
+  margin: 0;
+  font-size: x-small;
+  display: flex;
+}
+
+.profile h3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+#icon {
+  font-size: 0.5em;
+
+}

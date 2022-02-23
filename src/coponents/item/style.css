@@ -1,0 +1,63 @@
+.item {
+  display: flex;
+  font-size: small;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.info {
+  margin: 7%;
+  width: 100%;
+}
+.info p {
+  margin: 5px;
+  font-size: 1.5em;
+}
+
+.img-box img {
+  width: 100%;
+}
+
+.img-box {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+  width: 30%;
+}
+
+.btn {
+  border: none;
+  background-color: unset;
+  border-radius: 100%;
+  margin: 0 2%;
+}
+.productPlace {
+  display: flex;
+  width: 70%;
+  align-items: center;
+}
+.cartButton:hover {
+  fill: #0f4c81;
+}
+.cartButton:hover path {
+  fill: white;
+}
+.editButton:hover {
+  fill: #0f4c81;
+}
+.editButton:hover path {
+  fill: white;
+}
+.delButton:hover {
+  fill: red;
+}
+.delButton:hover path {
+  fill: white;
+}
