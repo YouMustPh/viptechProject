@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, HTMLInputTypeAttribute, useRef } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 type ItemProps = {
@@ -12,18 +11,24 @@ type ItemProps = {
     createDate: any
   ) => void;
 };
+
 export const AddForm = ({ onAdd }: ItemProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const uploadFile: any = useRef();
   const [image, setImage] = useState("/addphoto.svg");
+  const [inputName, setInputName] = useState("");
+  const [inputBrand, setInputBrand] = useState("");
+  const [inputPrice, setInputPrice]: any = useState("");
+  const [inputColor, setInputColor]: any = useState("");
+  const [inputSrc, setInputSrc]: any = useState("");
 
-  function openFileExplorer() {
+  const openFileExplorer = () => {
     uploadFile.current.click();
-  }
+  };
 
-  function handleFile(event: any) {
+  const handleFile = (event: any) => {
     parseFileToBase64(event.target.files);
-  }
+  };
 
   const parseFileToBase64 = (files: any) => {
     const file = files[0];
@@ -46,12 +51,6 @@ export const AddForm = ({ onAdd }: ItemProps) => {
     });
   };
 
-  const [inputName, setInputName] = useState("");
-  const [inputBrand, setInputBrand] = useState("");
-  const [inputPrice, setInputPrice]: any = useState("");
-  const [inputColor, setInputColor]: any = useState("Selecione a cor");
-  const [inputSrc, setInputSrc]:any = useState('');
-
   const handleInputName = (e: ChangeEvent<HTMLInputElement>) => {
     setInputName(e.target.value);
   };
@@ -65,20 +64,18 @@ export const AddForm = ({ onAdd }: ItemProps) => {
     setInputColor(e.target.value);
   };
 
-  const date = new Date().toLocaleDateString('en-CA')
-
+  const date = new Date().toLocaleDateString("en-CA");
 
   const handleAddProduct = () => {
     if (
       inputBrand !== "" &&
       inputName !== "" &&
       inputPrice !== "" &&
-      inputColor !== "Selecione a cor" &&
-      inputSrc !== ''
+      inputColor !== "" &&
+      inputSrc !== ""
     ) {
       onAdd(inputName, inputBrand, inputPrice, inputColor, inputSrc, date);
-      navigate("/initialPage")
-      // window.location.reload()
+      navigate("/");
     } else {
       console.log("erro");
     }
@@ -122,6 +119,8 @@ export const AddForm = ({ onAdd }: ItemProps) => {
           required
           value={inputPrice}
           onChange={handleInputPrice}
+          min="0.01" 
+          step="0.01"
         ></input>
       </fieldset>
 
@@ -134,10 +133,10 @@ export const AddForm = ({ onAdd }: ItemProps) => {
             required
             onChange={handleInputColor}
             style={{
-              color: inputColor === "Selecione a cor" ? "gray" : "black",
+              color: inputColor === "" ? "gray" : "black",
             }}
           >
-            <option value="Selecione a cor">Selecione a cor</option>
+            <option value=""   disabled hidden>Selecione a cor</option>
 
             <option value="Branco">Branco</option>
 
@@ -150,17 +149,11 @@ export const AddForm = ({ onAdd }: ItemProps) => {
 
       <fieldset className="card1">
         <legend>Data de Cadastro</legend>
-        <input
-          id="date"
-          type="date"
-          required
-          readOnly
-          value={date}
-        ></input>
+        <input id="date" type="date" required readOnly value={date}></input>
       </fieldset>
 
       <div className="img-box2">
-        <label htmlFor="product_pic">
+        <label htmlFor="product_pic" aria-required>
           <div className="imgInput">
             <img src={image} alt="img" />
             <p>Adicionar Fotos</p>
@@ -178,7 +171,6 @@ export const AddForm = ({ onAdd }: ItemProps) => {
           multiple
         />
       </div>
-      {/* <Link to="/" id="linkHome"> */}
       <button
         className="add-button"
         type="submit"
@@ -187,7 +179,6 @@ export const AddForm = ({ onAdd }: ItemProps) => {
       >
         Adicionar Produto
       </button>
-      {/* </Link> */}
     </form>
   );
 };

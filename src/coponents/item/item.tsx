@@ -15,7 +15,7 @@ export const Item = (props: any) => {
           <p
             style={{ color: "#0f4c81", fontSize: "2.5em", fontWeight: "bold" }}
           >
-            R$ {props.price.toFixed(2).replace(".", ",")}
+            R$ {props.price.replace(".", ",")}
           </p>
           <p>Cor: {props.color}</p>
         </div>

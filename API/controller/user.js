@@ -94,23 +94,4 @@ controller.login = async (email, password) => {
     throw erro;
   }
 };
-// controller.logout = async (email, password) => {
-//   try {
-//     const user = await User.scope("login").findOne({
-//       where: {
-//         email,
-//       },
-//     });
-
-//     const rightPassword = await bcrypt.compare(password, user.password);
-
-//     if (!rightPassword) return false;
-
-//     return jwt.sign({ id: user.id }, palavraChave, {
-//       expiresIn: "3h",
-//     });
-//   } catch (erro) {
-//     throw erro;
-//   }
-// };
 module.exports = controller;

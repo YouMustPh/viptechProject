@@ -13,10 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { getToken, putToken } from "./utilities/token";
 
 function App() {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [severity, setSeverity] = useState<any>("error");
+  
+  const navigate = useNavigate();
 
   const successAdd = (e: any) => {
     e
@@ -60,7 +61,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<LoginPage setToken={(e) => putToken(e.data.token)} />}
+            element={<LoginPage />}
           />
           <Route
             path="/register"
@@ -89,11 +90,6 @@ function App() {
       <div>
         <Header onlogout={logout} />
         <Routes>
-          {/* <Route path="/" element={<LoginPage onConfirm={successLogin} />} /> */}
-          {/* <Route
-            path="/register"
-            element={<RegisterPage onConfirm={successRegister} />}
-          /> */}
           <Route path="/" element={<InitialPage refresh={message} />} />
           <Route path="/addPage" element={<AddPage event={successAdd} />} />
           <Route path="/cartPage/:id" element={<CartPage />} />

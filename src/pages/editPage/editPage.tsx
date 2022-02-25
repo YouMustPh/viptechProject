@@ -2,6 +2,8 @@ import "../style.css";
 import { Link } from "react-router-dom";
 import { EditForm } from "../../coponents/Forms/editForm";
 import { api } from "../../api";
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 
 export const EditPage = () => {
   const editProduct = async (
@@ -12,8 +14,7 @@ export const EditPage = () => {
     color: string,
     src: any
   ) => {
-    let json = await api.editProduct(id, name, brand, price, color, src);
-    // console.log(json)
+    await api.editProduct(id, name, brand, price, color, src);
   };
 
   return (

@@ -6,12 +6,33 @@ import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export const CartForm = () => {
   const [product, setProduct]: any = useState({});
+
+  const [qtde, setQtde] = useState<number>(1);
+
   const params = useParams();
+
+  const [c100, setC100] = useState(0);
+  const [c10, setC10] = useState(0);
+  const [c20, setC20] = useState(0);
+  const [c5, setC5] = useState(0);
+  const [m1, setM1] = useState(0);
+  const [troco, setTroco]: any = useState(0);
+
+  let subtotal = product.price * qtde;
+  let frete = Math.round(subtotal * 0.1);
+  let totalPrice = subtotal + frete;
 
   const findProduct = async () => {
     const res = await api.getProductId(params.id);
     return res;
   };
+
+  useEffect(() => {
+    if (!qtde) {
+      setQtde(1);
+      console.log("oi");
+    }
+  }, [qtde]);
 
   useEffect(() => {
     const result = async () => {
@@ -22,18 +43,12 @@ export const CartForm = () => {
     result();
   }, []);
 
-  const [qtde, setQtde] = useState(1);
-
   const inc = () => {
     return setQtde(qtde + 1);
   };
   const dec = () => {
     if (qtde > 1) return setQtde(qtde - 1);
   };
-
-  let frete = Math.round(product.price * 0.1);
-  let subtotal = product.price * qtde;
-  let totalPrice = subtotal + frete;
 
   const payment = () => {
     let card: any = document.getElementById("payment");
@@ -42,6 +57,14 @@ export const CartForm = () => {
     let cedula10 = Math.floor(((totalPrice % 100) % 20) / 10);
     let cedula5 = Math.floor((((totalPrice % 100) % 20) % 10) / 5);
     let moeda1 = Math.floor((((totalPrice % 100) % 20) % 10) % 5);
+    let troco =
+      1 -
+      (totalPrice -
+        (cedula100 * 100 +
+          cedula5 * 5 +
+          cedula20 * 20 +
+          cedula10 * 10 +
+          moeda1));
 
     return (
       setC100(cedula100),
@@ -49,15 +72,10 @@ export const CartForm = () => {
       setC10(cedula10),
       setC5(cedula5),
       setM1(moeda1),
+      setTroco(troco.toFixed(2).replace(".", ",")),
       (card.style.display = "block")
     );
   };
-
-  const [c100, setC100] = useState(0);
-  const [c10, setC10] = useState(0);
-  const [c20, setC20] = useState(0);
-  const [c5, setC5] = useState(0);
-  const [m1, setM1] = useState(0);
 
   return (
     <div className="body">
@@ -91,7 +109,15 @@ export const CartForm = () => {
                 <button onClick={dec}>
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <input type="text" id="qtde-number" readOnly value={qtde} />
+                <input
+                  type="number"
+                  id="qtde-number"
+                  value={qtde}
+                  onChange={(e) => {
+                    setQtde(e.target.valueAsNumber);
+                  }}
+                  min="1"
+                />
                 <button onClick={inc}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
@@ -148,6 +174,13 @@ export const CartForm = () => {
           </p>
           <p style={m1 === 0 ? { display: "none" } : { display: "block" }}>
             {m1} {m1 === 1 ? "Moeda" : "Moedas  "} de R$ 1,00 real
+          </p>
+          <p
+            style={
+              troco === "1,00" ? { display: "none" } : { display: "block" }
+            }
+          >
+            e R$ {troco} {troco === "0,01" ? "centavo" : "centavos"} de troco
           </p>
         </div>
       </div>

@@ -5,14 +5,32 @@ import { api } from "../../api";
 import { Btns } from "../Forms/btns";
 import { Snackbar, Alert, CircularProgress } from "@mui/material";
 
+type ItemProps = {
+  id: string;
+  name: string;
+  brand: string;
+  price: number;
+  color: string;
+  src?: any;
+};
+
 export const ItemList = (props: any) => {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadProducts();
+    setLoading(true);
+    timeout(1000).then(() => {
+      loadProducts();
+    });
   }, []);
+
+  function timeout(delay: number) {
+    return new Promise((res) => {
+      setTimeout(res, delay);
+    });
+  }
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -31,16 +49,7 @@ export const ItemList = (props: any) => {
     setLoading(false);
     setProducts(json);
   };
-
   props.refresh == "Produto adicionado com sucesso" ? loadProducts() : "";
-  type ItemProps = {
-    id: string;
-    name: string;
-    brand: string;
-    price: number;
-    color: string;
-    src?: any;
-  };
 
   const onDel = async (id: any) => {
     await api.removeProduct(id);
@@ -50,20 +59,11 @@ export const ItemList = (props: any) => {
 
   return (
     <div>
-      {loading && (
-        <div
-          style={{
-            width: "100%",
-            height: "400px",
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+      {loading ? (
+        <div className="circularProgress">
           <CircularProgress />
         </div>
-      )}
-      {products.length !== 0 ? (
+      ) : products.length !== 0 ? (
         products.map((e: ItemProps) => (
           <li key={e.id} className="card">
             <Item
@@ -88,6 +88,7 @@ export const ItemList = (props: any) => {
           <p>Não há produtos disponiveis</p>
         </div>
       )}
+
       <Snackbar
         open={open}
         autoHideDuration={5000}

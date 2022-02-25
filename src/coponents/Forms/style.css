@@ -1,4 +1,3 @@
-
 .loginCard {
   width: 70%;
   margin: auto;
@@ -11,13 +10,28 @@
   text-align: center;
   height: 2em;
   outline: none;
-  
 }
-
 
 #linkPage {
   width: 40%;
   padding: 3%;
   margin: 5% 0;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
+#product_pic {
+  /* opacity: 0; */
+  /* visibility: hidden; */
+  content-visibility: hidden;
+  /* display: none; */
+  width: 1px;
+}
+
+#edit_pic {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}

@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, HTMLInputTypeAttribute, useRef } from "react";
 import "./style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Type = {
   onRegister: (name: string, email: string, password: string) => void;
@@ -10,6 +10,7 @@ export const RegisterForm = ({ onRegister }: Type) => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputName, setInputName] = useState("");
+
   const navigate = useNavigate()
 
   const handleInputEmail = (e: ChangeEvent<HTMLInputElement>) => {

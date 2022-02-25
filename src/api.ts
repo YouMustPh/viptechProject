@@ -2,12 +2,14 @@ import axios, { AxiosResponse, AxiosResponseHeaders } from "axios";
 const productURL: string = "http://localhost:3001/product/";
 const userUrl: string = "http://localhost:3001/user/";
 const loginUrl: string = "http://localhost:3001/login";
+import { putToken } from "./utilities/token";
 
 export const api = {
   getProducts: async () => {
     let response = await axios.get(productURL);
     return response.data;
   },
+
   getProductId: async (id: any) => {
     let response = await axios.get(`${productURL}${id}`);
     return response.data;
@@ -31,6 +33,7 @@ export const api = {
     });
     return response.data;
   },
+
   removeProduct: async (id: any) => {
     await axios.delete(`${productURL}${id}`);
   },
@@ -54,10 +57,12 @@ export const api = {
     });
     return response.data;
   },
+
   getUser: async () => {
     let response = await axios.get(userUrl);
     return response.data;
   },
+
   getUserId: async (id: any) => {
     let response = await axios.get(`${userUrl}${id}`);
     return response.data;
@@ -71,6 +76,7 @@ export const api = {
     });
     return response.data;
   },
+
   removeUser: async (id: any) => {
     await axios.delete(`${userUrl}${id}`);
   },
@@ -83,11 +89,13 @@ export const api = {
     });
     return response.data;
   },
+
   login: async (email: string, password: string) => {
-    let response = await axios.post(`${loginUrl}`, {
+    const response = await axios.post(`${loginUrl}`, {
       email,
       password,
     });
-    return response;
+    putToken(response.data)
+    return response.data
   },
 };

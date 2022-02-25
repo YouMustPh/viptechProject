@@ -1,10 +1,8 @@
 import "./style.css";
-import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from "../../utilities/token";
 import { api } from "../../api";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
-import { stringify } from "querystring";
 import { CloseIcon } from "@chakra-ui/icons";
 import { IconButton } from "@mui/material";
 
@@ -13,7 +11,7 @@ type Type = {
 };
 
 export const Header = (props: Type) => {
-  const navigate = useNavigate();
+  const [user, setUser] = useState<any>({});
 
   const User = async () => {};
 
@@ -23,18 +21,17 @@ export const Header = (props: Type) => {
 
   const handleLogout = () => {
     removeToken();
-    // navigate("/?");
+
     props.onlogout(true);
   };
 
-  const [user, setUser] = useState<any>({});
   const getProfile = async () => {
-    var token: any = getToken();
-    var decoded: any = jwt_decode(token);
+    let token: any = getToken();
+    let decoded: any = jwt_decode(token);
     let user = await api.getUserId(decoded.id);
     let btn = document.getElementById("btnProfile");
     let profile: any = document.getElementById("profile");
-    // console.log(profile?.style)
+
     if (btn) {
       btn.style.display = "none";
       profile.style.display = "block";
@@ -45,6 +42,7 @@ export const Header = (props: Type) => {
   const appear = () => {
     let btn = document.getElementById("btnProfile");
     let profile: any = document.getElementById("profile");
+
     if (btn) {
       btn.style.display = "block";
       profile.style.display = "none";
@@ -57,7 +55,7 @@ export const Header = (props: Type) => {
         <header>
           <div className="login">
             <button id="btnProfile" className="btnIP" onClick={getProfile}>
-              <div>Perfil</div>
+              Perfil
             </button>
             <div className="profile" id="profile">
               <div
@@ -71,7 +69,7 @@ export const Header = (props: Type) => {
                   <h3>Usuario</h3>
                   <p>{user.name}</p>
                 </div>
-
+                
                 <IconButton
                   id="icon"
                   aria-label="delete"
@@ -91,7 +89,9 @@ export const Header = (props: Type) => {
             <img src="src/logo.svg" alt="logo" />
           </div>
           <div className="logout">
-            <button  className="btnIP" onClick={handleLogout}>Logout</button>
+            <button className="btnIP" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         </header>
       </div>

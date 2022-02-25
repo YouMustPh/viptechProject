@@ -1,14 +1,14 @@
 import { RegisterForm } from "../../coponents/Forms/registerForm";
 import { Link } from "react-router-dom";
 import { api } from "../../api";
-import { useNavigate } from "react-router-dom";
+
 
 type Type = {
   onConfirm: (confirm: boolean) => void;
 };
 
 export const RegisterPage = ({ onConfirm }: Type) => {
-  const navigate = useNavigate();
+  
   const addUser = async (name: string, email: string, password: string) => {
     try {
       await api.addUser(name, email, password);

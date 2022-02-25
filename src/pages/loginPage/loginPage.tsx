@@ -1,26 +1,40 @@
 import { LoginForm } from "../../coponents/Forms/loginForm";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { api } from "../../api";
-import { useEffect, useState } from "react";
-import { Snackbar, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Snackbar, Alert, Button, CircularProgress } from "@mui/material";
+import { useState } from "react";
+import { putToken } from "../../utilities/token";
+
 type Type = {
   setToken: (token: any) => void;
 };
 
-export const LoginPage = (props: Type) => {
-  const navigate = useNavigate()
+export const LoginPage = () => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  function timeout(delay: number) {
+    return new Promise((res) => {
+      setTimeout(res, delay);
+    });
+  }
+
   const login = async (email: string, password: string) => {
-    try {
-      const token = await api.login(email, password);
-      props.setToken(token)
-      // navigate("/initialPage")
-    } catch (error) {
-      console.log(error);
-      setOpen(true);
-    }
+    setLoading(true);
+
+    timeout(1500).then(async () => {
+      try {
+        await api.login(email, password);
+        setLoading(true);
+        window.location.reload();
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        setOpen(true);
+      }
+    });
   };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -31,26 +45,39 @@ export const LoginPage = (props: Type) => {
 
     setOpen(false);
   };
+
   return (
     <div>
-      <br />
-      <div className="loginBody">
-        <h1>Realizar Login</h1>
-        <LoginForm onLogin={login} />
-        <div className="registermenu">
-          <Link to="/register">Não possui um cadastro?</Link>
+      {loading ? (
+        <div className="circularProgress">
+          <CircularProgress />
         </div>
-      </div>
-      <Snackbar
-        open={open}
-        autoHideDuration={5000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          'Usuario ou senha incorretos, tente novamente'
-        </Alert>
-      </Snackbar>
+      ) : (
+        <div>
+          <br />
+          <div className="loginBody">
+            <h1>Realizar Login</h1>
+            <LoginForm onLogin={login} />
+            <div className="registermenu">
+              <Link to="/register">Não possui um cadastro?</Link>
+            </div>
+          </div>
+          <Snackbar
+            open={open}
+            autoHideDuration={5000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              Usuario ou senha incorretos, tente novamente
+            </Alert>
+          </Snackbar>
+        </div>
+      )}
     </div>
   );
 };

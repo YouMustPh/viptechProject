@@ -3,7 +3,7 @@
 }
 .registermenu {
   text-align: center;
-  margin-bottom: 2%;
+  margin-bottom: 5%;
 }
 
 .registermenu a {
@@ -107,13 +107,6 @@ select#color {
   color: black;
   top: 10px;
 }
-
-#product_pic {
-  opacity: 0;
-  visibility: hidden;
-  display: none;
-}
-
 .img-box2 {
   height: 10%;
   width: 10%;

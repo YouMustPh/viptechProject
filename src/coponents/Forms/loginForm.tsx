@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, HTMLInputTypeAttribute, useRef } from "react";
+import { useState, ChangeEvent} from "react";
 import "./style.css";
 
 type Type = {
@@ -8,6 +8,7 @@ type Type = {
 export const LoginForm = ({ onLogin }: Type) => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
+
   const handleLogin = () => {
     if (inputEmail !== "" && inputPassword !== "") {
       onLogin(inputEmail, inputPassword);
@@ -22,6 +23,7 @@ export const LoginForm = ({ onLogin }: Type) => {
   const handleInputPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setInputPassword(e.target.value);
   };
+
   return (
     <form className="loginForm">
       <fieldset className="loginCard">
