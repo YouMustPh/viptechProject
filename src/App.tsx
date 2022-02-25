@@ -28,15 +28,17 @@ function App() {
         setMessage("Erro ao adicionar produto, tente novamente"),
         setSeverity("error"));
   };
-
+ 
   const successRegister = (e: any) => {
-    e == true
+    e == "true"
       ? (setOpen(true),
         setMessage("Usuario cadastrado com sucesso"),
         setSeverity("success"))
-      : (setOpen(true),
-        setMessage("Erro ao cadastrar o usuario, tente novamente"),
-        setSeverity("error"));
+      : (e == "falseEmail" ? (setOpen(true),
+        setMessage("Email ja cadastrado"),
+        setSeverity("error")) : (setOpen(true),
+        setMessage("Erro ao realizar cadastro, tente novamente"),
+        setSeverity("error") ));
   };
 
   const handleClose = (

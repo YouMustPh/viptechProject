@@ -4,7 +4,7 @@ import { api } from "../../api";
 
 
 type Type = {
-  onConfirm: (confirm: boolean) => void;
+  onConfirm: (confirm: string) => void;
 };
 
 export const RegisterPage = ({ onConfirm }: Type) => {
@@ -12,13 +12,12 @@ export const RegisterPage = ({ onConfirm }: Type) => {
   const addUser = async (name: string, email: string, password: string) => {
     try {
       const userCreated = await api.addUser(name, email, password);
-      onConfirm(true);
+      userCreated == false ? onConfirm("falseEmail") : onConfirm('true')
     } catch (error) {
       console.log(error);
-      onConfirm(false);
+      onConfirm("falseData");
     }
   };
-
   return (
     <div>
       <br />
