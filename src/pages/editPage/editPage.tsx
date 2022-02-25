@@ -2,8 +2,6 @@ import "../style.css";
 import { Link } from "react-router-dom";
 import { EditForm } from "../../coponents/Forms/editForm";
 import { api } from "../../api";
-import { useState } from "react";
-import { CircularProgress } from "@mui/material";
 
 export const EditPage = () => {
   const editProduct = async (

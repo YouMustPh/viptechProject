@@ -11,8 +11,7 @@ export const RegisterPage = ({ onConfirm }: Type) => {
   
   const addUser = async (name: string, email: string, password: string) => {
     try {
-      await api.addUser(name, email, password);
-
+      const userCreated = await api.addUser(name, email, password);
       onConfirm(true);
     } catch (error) {
       console.log(error);
